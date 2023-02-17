@@ -51,7 +51,10 @@ class GatewayCon(object):
     async def _recv_loop(self, ws):
         async for msg in ws:
             decoded = decode_msg(msg)
-            await self.handle_message(decoded)
+            try:
+                await self.handle_message(decoded)
+            except Exception as e:
+                print(e)
 
     async def _send_loop(self, ws):
         while True:
@@ -60,15 +63,16 @@ class GatewayCon(object):
 
     async def _ping_loop(self, ws):
         while True:
-            asyncio.sleep(self._pulse)
+            await asyncio.sleep(self._pulse)
             ping = {"op": 11}
             await self.send(ping)
 
     async def handle_message(self, msg):
         pass
 
-    async def _end(self, msg):
-       await self._q.put(msg)
+    async def send(self, msg):
+        print("pushing msg to send")
+        await self._q.put(msg)
 
 class GatewayPrinter(GatewayCon):
     async def handle_message(self, msg):
