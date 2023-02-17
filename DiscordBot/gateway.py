@@ -58,8 +58,16 @@ class GatewayCon(object):
 
     async def _send_loop(self, ws):
         while True:
-            msg = await self._q.get()
-            await ws.send(msg)
+            try:
+                msg = await self._q.get()
+                strmsg = json.dumps(msg)
+                if "token" in msg["d"]:
+                    msg["d"]["token"] == "***"
+                print(msg)
+                await ws.send(strmsg)
+            except Exception as e:
+                print("exception in send: {e}")
+
 
     async def _ping_loop(self, ws):
         while True:

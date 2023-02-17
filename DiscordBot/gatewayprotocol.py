@@ -27,6 +27,6 @@ class Gateway(GatewayCon):
 if __name__ == "__main__":
     token = "foo"
     with open(".token") as token_file:
-        token = token_file.read()
+        token = token_file.read()[:-1]
         g = Gateway(token)
         g.run()
