@@ -1,8 +1,15 @@
 import websockets
 import asyncio
+from dataclasses import dataclass
 
 GATEWAY_URL = "wss://gateway.discord.gg/"
 
+@dataclass
+class GatewayMessage():
+    op: int
+    data: object
+    sequence: int
+    name: str
 
 
 async def run_connection():
