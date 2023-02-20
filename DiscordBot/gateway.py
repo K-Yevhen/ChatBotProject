@@ -1,6 +1,7 @@
 import websockets
 import asyncio
 import json
+import traceback
 
 from dataclasses import dataclass
 from types import SimpleNamespace
@@ -54,7 +55,8 @@ class GatewayCon(object):
             try:
                 await self.handle_message(decoded)
             except Exception as e:
-                print(e)
+                print(f"exception in handle{e}")
+                traceback.print_exc()
 
     async def _send_loop(self, ws):
         while True:
