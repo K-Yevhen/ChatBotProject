@@ -19,7 +19,7 @@ def send_welcome(message):
 
 
 @bot.message_handler(func=lambda msg: True)
-def answer(message):
+def echo_all(message):
     user_location = message.text  # getting the location from users
     api_url = f"https://api.openweathermap.org/data/2.5/weather?q={user_location}&appid={open_weather_token}"
     response = requests.get(url=api_url)
